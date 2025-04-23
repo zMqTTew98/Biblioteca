@@ -32,6 +32,12 @@ function main(){
             case "2":
                 utils.visualizzaCatalogo(catalogoLibri);
                 break;
+            
+            case "3":
+                let criterioRicerca=input("Inserisci il criterio di ricerca (titolo/autore/genere/ISBN): ").toLowerCase();
+                let valoreRicerca=input("Inserisci il valore da ricercare per "+criterioRicerca+": ").toLowerCase();
+                utils.ricercaAvanzata(catalogoLibri,criterioRicerca,valoreRicerca);
+                break;
         }
     }
 }
