@@ -5,7 +5,7 @@ import PromptSync from "prompt-sync";
 const input=PromptSync();
 
 let catalogoLibri=[];
-let utenti=[];
+let listaUtenti=[];
 let prestiti=[];
 
 function main(){
@@ -13,7 +13,7 @@ function main(){
     let continua=true;
 
     while(continua){
-        console.log("\n--- Gestione Bibliteca ---\n1. Aggiungi libro al catalogo\n2. Visualizza catalogo\n3. Ricerca avanzata\n4. Aggiungi utente\n5. Presta libro\n6. Visualizza prestiti\n0. Uscita dal programma\n");
+        console.log("\n--- Gestione Bibliteca ---\n1. Aggiungi libro al catalogo\n2. Visualizza catalogo\n3. Ricerca avanzata\n4. Aggiungi utente\n5. Presta libro\n6. Visualizza prestiti\n7. Restituisci libro\n0. Uscita dal programma\n");
         scelta=input("------> ")
         switch(scelta){
             case "0":
@@ -37,6 +37,32 @@ function main(){
                 let criterioRicerca=input("Inserisci il criterio di ricerca (titolo/autore/genere/ISBN): ").toLowerCase();
                 let valoreRicerca=input("Inserisci il valore da ricercare per "+criterioRicerca+": ").toLowerCase();
                 utils.ricercaAvanzata(catalogoLibri,criterioRicerca,valoreRicerca);
+                break;
+
+            case "4":
+                let nomeUtente=input("Inserisci il nome dell'utente: ");
+                let idUtente=Number(input("Inserisci l'ID dell'utente: "));
+                utils.aggiungiUtente(listaUtenti,nomeUtente,idUtente);
+                break;
+
+            case "5":
+                let isbnPrestito=Number(input("Inserisci l'ISBN del libro da prestare: "));
+                let idUtentePrestito=Number(input("Inserisci l'ID dell'utente che richiede il prestito: "));
+                utils.prestaLibro(catalogoLibri,listaUtenti,isbnPrestito,idUtentePrestito,prestiti);
+                break;
+
+            case "6":
+                utils.visualizzaPrestiti(prestiti);
+                break;
+            
+            case "7":
+                let isbnRestituzione=Number(input("Inserisci l'ISBN del libro da restituire: "));
+                let idUtenteRestituzione=Number(input("Inserisci l'ID dell'utente che restituisce il libro: "));
+                utils.restituisciLibro(catalogoLibri,listaUtenti,isbnRestituzione,idUtenteRestituzione,prestiti);
+                break;
+
+            default:
+                console.error("Errore! Scelta non valida.");
                 break;
         }
     }
