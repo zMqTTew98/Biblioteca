@@ -13,7 +13,7 @@ function main(){
     let continua=true;
 
     while(continua){
-        console.log("\n--- Gestione Bibliteca ---\n1. Aggiungi libro al catalogo\n2. Visualizza catalogo\n3. Ricerca avanzata\n4. Aggiungi utente\n5. Presta libro\n6. Visualizza prestiti\n7. Restituisci libro\n0. Uscita dal programma\n");
+        console.log("\n📚 Gestione Bibliteca 📚\n1. Aggiungi libro al catalogo\n2. Visualizza catalogo\n3. Ricerca avanzata\n4. Aggiungi utente\n5. Elimina utente\n6. Visualizza lista utenti\n7. Presta libro\n8. Visualizza prestiti\n9. Restituisci libro\n0. Uscita dal programma\n");
         scelta=input("------> ")
         switch(scelta){
             case "0":
@@ -46,16 +46,25 @@ function main(){
                 break;
 
             case "5":
+                let idUtenteEliminazione=Number(input("Inserisci l'ID dell'utente da eliminare: "));
+                utils.eliminaUtente(listaUtenti,idUtenteEliminazione);
+                break;
+
+            case "6":
+                utils.visualizzaUtenti(listaUtenti);
+                break;
+
+            case "7":
                 let isbnPrestito=Number(input("Inserisci l'ISBN del libro da prestare: "));
                 let idUtentePrestito=Number(input("Inserisci l'ID dell'utente che richiede il prestito: "));
                 utils.prestaLibro(catalogoLibri,listaUtenti,isbnPrestito,idUtentePrestito,prestiti);
                 break;
 
-            case "6":
+            case "8":
                 utils.visualizzaPrestiti(prestiti);
                 break;
             
-            case "7":
+            case "9":
                 let isbnRestituzione=Number(input("Inserisci l'ISBN del libro da restituire: "));
                 let idUtenteRestituzione=Number(input("Inserisci l'ID dell'utente che restituisce il libro: "));
                 utils.restituisciLibro(catalogoLibri,listaUtenti,isbnRestituzione,idUtenteRestituzione,prestiti);

@@ -2,7 +2,7 @@
 
 export function aggiungiLibro(catalogoLibri,titolo,autore,genere,isbn){
     if(!catalogoLibri.find(libro=>libro.isbn===isbn)){
-        let libro={titolo: titolo, autore: autore, genere: genere, isbn: isbn, prestato: false};
+        let libro={titolo: titolo, autore: autore, genere: genere, isbn: isbn, prestato: null};
         catalogoLibri.push(libro);
         console.log("Libro aggiunto con successo!");
     }else console.error("Errore! ISBN del libro non valido o riferito ad un altro titolo.")
@@ -54,6 +54,28 @@ export function aggiungiUtente(listaUtenti,nomeUtente,idUtente){
     }
 }
 
+export function eliminaUtente(listaUtenti,idUtente){
+    if(listaUtenti.find(utente=>utente.id===idUtente)){
+        let index=listaUtenti.findIndex(utente=>utente.id===idUtente);
+        listaUtenti.splice(index,1);
+        console.log("Utente eliminato con successo!")
+    }else{
+        console.error("Errore! Questo ID non è associato ad alcun utente.")
+    }
+}
+
+export function visualizzaUtenti(listaUtenti){
+    if(listaUtenti.length===0){
+        console.log("Non sono presenti utenti nella lista.");
+        return;
+    }
+
+    console.log("Lista utenti: ")
+    for(let i=0;i<listaUtenti.length;i++){
+        console.log(`${i+1}. ${listaUtenti[i].nome} (ID: ${listaUtenti[i].id})`);
+    }
+}
+
 export function prestaLibro(catalogoLibri,listaUtenti,isbn,idUtente,prestiti){
     let libro=catalogoLibri.find(lib=>lib.isbn===isbn);
 
@@ -98,10 +120,10 @@ export function restituisciLibro(catalogoLibri,listaUtenti,isbn,idUtente,prestit
         console.error("Errore! Libro non trovato nel catalogo.");
     }else if(utente===undefined){
         console.error("Errore! Utente non trovato.");
-    }else if(!libro.prestato || libro.prestato.utenteId!==idUtente){
+    }else if(libro.prestato===null || libro.prestato.utenteId!==idUtente){
         console.error("Errore! Il libro non è stato prestato a questo utente.");
     }else{
-        libro.prestato=false;
+        libro.prestato=null;
 
         let indexUtente=utente.libriPrestati.indexOf(isbn);
         if(indexUtente!==-1) {
