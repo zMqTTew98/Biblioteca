@@ -35,7 +35,7 @@ function main(){
     let continua=true;
 
     while(continua){
-        console.log("\n📚 Gestione Bibliteca 📚\n1. Aggiungi libro al catalogo\n2. Visualizza catalogo\n3. Ricerca avanzata\n4. Aggiungi utente\n5. Elimina utente\n6. Visualizza lista utenti\n7. Presta libro\n8. Visualizza prestiti\n9. Restituisci libro\n0. Uscita dal programma\n");
+        console.log("\n📚 Gestione Bibliteca 📚\n1. Aggiungi libro al catalogo\n2. Modifica libro\n3.Elimina libro\n4. Visualizza catalogo\n5. Ricerca avanzata\n6. Aggiungi utente\n7. Elimina utente\n8. Visualizza lista utenti\n9. Presta libro\n10. Visualizza prestiti\n11. Restituisci libro\n0. Uscita dal programma\n");
         scelta=input("------> ")
         switch(scelta){
             case "0":
@@ -67,10 +67,36 @@ function main(){
                 break;
 
             case "2":
+                /**
+                 * @type {string}
+                 */
+                let titoloLibroModifica=input("Inserisci il titolo del libro da modificare: ");
+
+                /**
+                 * @type {string}
+                 */
+                let chiaveModifica=input("Inserisci la proprietà da modificare: ").toLowerCase();
+
+                /**
+                 * @type {string}
+                 */
+                let valoreModifica=input("Inserisci il nuovo valore da assegnare: ").toLowerCase();
+                utils.modificaLibro(catalogoLibri,titoloLibroModifica,chiaveModifica,valoreModifica);
+                break;
+
+            case "3":
+                /**
+                 * @type {Number}
+                 */
+                let isbnEliminazione=Number(input("Inserisci l'ISBN del libro da eliminare: "));
+                utils.eliminaLibro(catalogoLibri,isbnEliminazione);
+                break;
+
+            case "4":
                 utils.visualizzaCatalogo(catalogoLibri);
                 break;
             
-            case "3":
+            case "5":
                 /**
                  * @type {string}
                  */
@@ -83,7 +109,7 @@ function main(){
                 utils.ricercaAvanzata(catalogoLibri,criterioRicerca,valoreRicerca);
                 break;
 
-            case "4":
+            case "6":
                 /**
                  * @type {string}
                  */
@@ -96,7 +122,7 @@ function main(){
                 utils.aggiungiUtente(listaUtenti,nomeUtente,idUtente);
                 break;
 
-            case "5":
+            case "7":
                 /**
                  * @type {Number}
                  */
@@ -104,11 +130,11 @@ function main(){
                 utils.eliminaUtente(listaUtenti,idUtenteEliminazione);
                 break;
 
-            case "6":
+            case "8":
                 utils.visualizzaUtenti(listaUtenti);
                 break;
 
-            case "7":
+            case "9":
                 /**
                  * @type {Number}
                  */
@@ -121,11 +147,11 @@ function main(){
                 utils.prestaLibro(catalogoLibri,listaUtenti,isbnPrestito,idUtentePrestito,prestiti);
                 break;
 
-            case "8":
+            case "10":
                 utils.visualizzaPrestiti(prestiti);
                 break;
             
-            case "9":
+            case "11":
                 /**
                  * @type {Number}
                  */

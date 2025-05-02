@@ -23,6 +23,62 @@ export function aggiungiLibro(catalogoLibri,titolo,autore,genere,isbn){
 }
 
 /**
+ * @description Funzione che permette di modificare una proprietà del libro dal titolo desiderato.
+ * @param {Libro[]} catalogoLibri - Array che contiene i libri del catalogo
+ * @param {string} titolo         - Stringa che rappresenta il titolo del libro da modificare
+ * @param {string} chiave         - Stringa che rappresenta la proprietà da modificare del libro
+ * @param {string} modifica       - Stringa che rappresenta il nuovo valore della proprietà desiderata
+ * @returns {void}                  Non restituisce un valore, ma modifica i valori delle proprietà dei libri desiderati nell'array dei libri
+ */
+export function modificaLibro(catalogoLibri,titolo,chiave,modifica){
+    let libro=catalogoLibri.find(libro=>libro.titolo===titolo);
+
+    if(!libro){
+        console.error("Errore! Libro non trovato.");
+        return;
+    }
+
+    if(!(chiave in libro)){
+        console.error("Errore! Chiave inserita non valida in quanto le proprietà modificabili sono titolo, autore, genere e ISBN");
+        return;
+    }
+
+    if(chiave==="isbn"){
+        let nuovoIsbn=Number(modifica);
+        if(isNaN(nuovoIsbn)){
+            console.error("Errore! L'ISBN deve essere necessariamente un valore numerico.");
+            return;
+        }
+
+        if(catalogoLibri.find(libro=>libro.isbn===nuovoIsbn)){
+            console.error("Errore! Il seguente ISBN è già associato ad un altro libro.");
+            return;
+        }
+        libro[chiave]=nuovoIsbn;
+    }else{
+        libro[chiave]=modifica;
+    }
+
+    console.log(`Il libro "${titolo}" è stato aggiornato: ${chiave} modificato con successo.`);
+}
+
+/**
+ * @description Funzione che permette di eliminare un libro dal catalogo dei libri.
+ * @param {Libro[]} catalogoLibri - Array che contiene i libri del catalogo
+ * @param {Number} isbn           - Valore numerico che rappresenta l'ISBN del libro da eliminare
+ * @returns {void}                  Non restituisce un valore, ma aggiorna l'array dei libri eliminando il libro desiderato
+ */
+export function eliminaLibro(catalogoLibri,isbn){
+    if(catalogoLibri.find(libro=>libro.isbn===isbn)){
+        let index=catalogoLibri.findIndex(libro=>libro.isbn===isbn);
+        catalogoLibri.splice(index,1);
+        console.log("Libro eliminato con successo!");
+    }else{
+        console.error("Errore! Libro non trovato nel catalogo.");
+    }
+}
+
+/**
  * @description Funzione che permette di stampare in modo formattato il catalogo dei libri.
  * @param {Libro[]} catalogoLibri - Array che contiene i libri del catalogo
  * @returns {void}                  Stampa il catalogo dei libri in modo formattato
@@ -144,7 +200,6 @@ export function prestaLibro(catalogoLibri,listaUtenti,isbn,idUtente,prestiti){
                 libro.prestato={utenteId: idUtente};
                 utente.libriPrestati.push(isbn);
                 prestiti.push({titolo: libro.titolo, nomeUtente: utente.nome, isbn: isbn, utenteId: idUtente});
-
                 console.log("Il libro "+libro.titolo+" è stato prestato all'utente "+utente.nome+".");
             }else{
                 console.error("Errore! Utente non trovato.");
