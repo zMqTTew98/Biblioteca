@@ -145,6 +145,8 @@ export function aggiungiUtente(listaUtenti,nomeUtente,idUtente){
 
 /**
  * @description Funzione che gestisce e permette l'eliminazione di un utente attivo della lista.
+ * @param {Prestito[]} prestiti   - Array che contiene i prestiti attualmente registrati e attivi
+ * @param {Libro[]} catalogoLibri - Array che contiene il catalogo dei libri
  * @param {Utente[]} listaUtenti  - Array che contiene gli utenti attualmente attivi della lista
  * @param {Number} idUtente       - Valore numerico che rappresenta l'ID associato all'utente da rimuovere dalla lista
  * @returns {void}                  Non restituisce un valore, ma aggiorna l'array che contiene gli utenti eliminando quello desiderato
