@@ -149,14 +149,33 @@ export function aggiungiUtente(listaUtenti,nomeUtente,idUtente){
  * @param {Number} idUtente       - Valore numerico che rappresenta l'ID associato all'utente da rimuovere dalla lista
  * @returns {void}                  Non restituisce un valore, ma aggiorna l'array che contiene gli utenti eliminando quello desiderato
  */
-export function eliminaUtente(listaUtenti,idUtente){
-    if(listaUtenti.find(utente=>utente.id===idUtente)){
-        let index=listaUtenti.findIndex(utente=>utente.id===idUtente);
-        listaUtenti.splice(index,1);
-        console.log("Utente eliminato con successo!")
-    }else{
-        console.error("Errore! Questo ID non è associato ad alcun utente.")
+export function eliminaUtente(prestiti,catalogoLibri,listaUtenti,idUtente){
+    let utente=listaUtenti.find(utente=>utente.id===idUtente);
+    
+    if(!utente){
+        console.error("Errore! Utente non trovato.");
+        return;
     }
+    
+    //Modifica per evitare l'eliminazione dell'utente prima della restituzione dei libri effettuata per non bloccare i prestiti in modo permanente
+    for(let isbn of utente.libriPrestati){
+        let libro=catalogoLibri.find(libro=>libro.isbn===isbn);
+        if(libro && libro.prestato && libro.prestato.utenteId===idUtente){
+            libro.prestato=null;
+           }
+    
+        const indexPrestito=prestiti.findIndex(prestito=>prestito.isbn===isbn && prestito.utenteId===idUtente);
+        if(indexPrestito!==-1){
+            prestiti.splice(indexPrestito,1);
+        }
+    }
+    
+    //Rimozione dell’utente dalla lista
+    let indexUtente=listaUtenti.findIndex(utente=>utente.id===idUtente);
+        if(indexUtente!==-1){
+            listaUtenti.splice(indexUtente,1);
+            console.log(`Utente ${utente.nome} eliminato.`);
+        }
 }
 
 /**

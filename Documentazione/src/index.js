@@ -80,7 +80,7 @@ function main(){
                 /**
                  * @type {string}
                  */
-                let valoreModifica=input("Inserisci il nuovo valore da assegnare: ").toLowerCase();
+                let valoreModifica=input("Inserisci il nuovo valore da assegnare: ");
                 utils.modificaLibro(catalogoLibri,titoloLibroModifica,chiaveModifica,valoreModifica);
                 break;
 
@@ -127,7 +127,7 @@ function main(){
                  * @type {Number}
                  */
                 let idUtenteEliminazione=Number(input("Inserisci l'ID dell'utente da eliminare: "));
-                utils.eliminaUtente(listaUtenti,idUtenteEliminazione);
+                utils.eliminaUtente(prestiti,catalogoLibri,listaUtenti,idUtenteEliminazione);
                 break;
 
             case "8":
